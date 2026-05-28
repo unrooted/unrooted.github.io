@@ -1,0 +1,18 @@
+{{- if and .IsPage (eq .Section "posts") -}}
+{{- $author := $.Site.Params.Owner | default "unrooted" -}}
+{{- $description := .Description | default .Summary | plainify -}}
+{{- $image := .Param "cover" | default "og-image.png" | absURL -}}
+{{- $ld := dict
+    "@context" "https://schema.org"
+    "@type" "BlogPosting"
+    "headline" .Title
+    "description" $description
+    "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00")
+    "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")
+    "author" (dict "@type" "Person" "name" $author)
+    "image" $image
+    "url" .Permalink
+    "mainEntityOfPage" .Permalink
+-}}
+<script type="application/ld+json">{{ $ld | jsonify | safeJS }}</script>
+{{- end -}}

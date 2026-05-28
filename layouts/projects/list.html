@@ -1,0 +1,34 @@
+{{ define "main" }}
+  {{ with .Content }}
+    <div class="index-content">
+      {{ . }}
+    </div>
+  {{ end }}
+  <div class="posts">
+    {{ range .Pages }}
+      <article class="post on-list project-row">
+        <h2 class="post-title">
+          <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+          {{ with .Params.status }}
+            <span class="project-status project-status--{{ . | lower }}">[{{ upper . }}]</span>
+          {{ end }}
+        </h2>
+
+        {{ if .Params.tags }}
+          <span class="post-tags">
+            {{ range .Params.tags }}
+              #<a href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}">{{ . }}</a>&nbsp;
+            {{ end }}
+          </span>
+        {{ end }}
+
+        <div class="post-content">
+          {{ with .Description }}<p>{{ . | markdownify }}</p>{{ end }}
+          {{ with .Params.repo }}
+            <p><a class="project-repo" href="{{ . }}">repo&nbsp;→</a></p>
+          {{ end }}
+        </div>
+      </article>
+    {{ end }}
+  </div>
+{{ end }}

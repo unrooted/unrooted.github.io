@@ -1,5 +1,171 @@
 :root {
-  --background: #0c0a09;
-  --foreground: #eceae5;
+  --background: #04020D;
+  --foreground: #ECE7F2;
   --accent: #dc2626;
+  --accent-warn: #FACC15;
+  --muted: #7A6790;
+  --rule: #381E3D;
+}
+
+::selection { background: var(--accent); color: var(--background); }
+
+/* Body links: clean while reading, intent revealed on hover */
+.post-content a,
+.index-content a { text-decoration: none; }
+.post-content a:hover,
+.index-content a:hover {
+  text-decoration: underline dotted var(--accent);
+  text-underline-offset: 3px;
+}
+
+/* Code blocks: red rule on the left */
+.post-content pre,
+.index-content pre {
+  border-left: 2px solid var(--accent);
+  padding-left: 1rem;
+}
+
+/* Index post row separator */
+.posts article.on-list {
+  border-bottom: 1px dashed var(--rule);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.posts article.on-list:last-child { border-bottom: none; }
+
+/* Unified red-pill hover for clickable affordances (nav links, post titles, read-more) */
+.navigation-menu .menu--desktop > li > a,
+.posts article.on-list .post-title a,
+.posts a.read-more {
+  text-decoration: none;
+  padding: 0 0.25rem;
+}
+.navigation-menu .menu--desktop > li > a:hover,
+.posts article.on-list .post-title a:hover,
+.posts a.read-more:hover {
+  background: var(--accent);
+  color: var(--background);
+  text-decoration: none;
+}
+
+/* Bracketed nav: [posts] [projects] [about] [rss] */
+.navigation-menu .menu--desktop > li > a::before { content: "["; color: var(--muted); margin-right: 0.15em; }
+.navigation-menu .menu--desktop > li > a::after  { content: "]"; color: var(--muted); margin-left: 0.15em; }
+.navigation-menu .menu--desktop > li > a:hover::before,
+.navigation-menu .menu--desktop > li > a:hover::after { color: var(--background); }
+
+/* Project status badges */
+.project-status {
+  font-size: 0.75em;
+  margin-left: 0.5rem;
+  letter-spacing: 0.05em;
+}
+.project-status--active   { color: var(--accent); }
+.project-status--wip      { color: var(--accent-warn); }
+.project-status--archived { color: var(--muted); }
+
+/* Dynamic shell-prompt logo — neutralize theme's red pill so per-span colors render on the page bg */
+.logo.prompt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: transparent;
+  color: var(--foreground);
+  padding: 0;
+  font-weight: normal;
+}
+.prompt-user,
+.prompt-dollar { color: var(--accent); }
+.prompt-dollar { margin-left: 0.15em; }
+.prompt-cmd    { color: var(--muted); }
+.prompt-cursor {
+  display: inline-block;
+  color: var(--accent);
+  animation: blink 1s steps(2, end) infinite;
+}
+@keyframes blink { to { visibility: hidden; } }
+.prompt-logo,
+.prompt-logo:hover { text-decoration: none; }
+
+/* Tag chips: [#name] inline with the date, separated by a · dot.
+   font-size:0 on the wrapper collapses the theme's literal "#" text node
+   and the whitespace between tags; child <a>s restore a real size and
+   ::before/::after add the brackets and # prefix. */
+.post-meta { display: inline; }
+.post-tags {
+  display: inline;
+  font-size: 0;
+}
+.post-tags::before {
+  content: "·";
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0 0.5em;
+}
+.post-tags a {
+  font-size: 0.85rem;
+  margin-right: 0.4em;
+  text-decoration: none;
+  color: var(--muted);
+  padding: 0 0.2em;
+}
+.post-tags a::before { content: "[#"; }
+.post-tags a::after  { content: "]"; }
+.post-tags a:hover {
+  color: var(--background);
+  background: var(--accent);
+}
+
+/* Blockquote: clean accent left-bar, drop theme's box-and-> marker */
+blockquote {
+  border: none;
+  border-left: 3px solid var(--accent);
+  padding: 0.5rem 0 0.5rem 1.25rem;
+  margin: 1.5rem 0;
+  color: var(--foreground);
+}
+blockquote::before { display: none; }
+
+/* Horizontal rule: thin dashed accent, matching the post-row separator */
+hr {
+  background: none;
+  height: auto;
+  border: none;
+  border-top: 1px dashed var(--rule);
+  margin: 2rem 0;
+}
+
+/* Sticky footer at viewport bottom — theme's .container has min-height:100vh
+   and is flex-column; .content needs flex:1 to push the footer down. */
+.content { flex: 1; }
+.footer-prompt {
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 1;
+  border-top: 1px dashed var(--rule);
+}
+.footer-right a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.footer-right a:hover {
+  color: var(--background);
+  background: var(--accent);
+  text-decoration: none;
+}
+@media (max-width: 600px) {
+  .footer-prompt {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}
+
+/* 404 page */
+.page-404__body { background: transparent; padding-left: 0; }
+.page-404__body a {
+  color: var(--accent);
+  text-decoration: underline dotted var(--accent);
 }

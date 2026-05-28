@@ -1,0 +1,9 @@
+{{ define "main" }}
+<div class="post page-404">
+  <pre class="page-404__body">
+unrooted@web:/$ cat /var/www/that-page
+cat: that-page: No such file or directory
+$ <a href="{{ "/" | absURL }}">cd /</a> <span class="prompt-cursor">▮</span>
+  </pre>
+</div>
+{{ end }}

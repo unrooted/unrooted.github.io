@@ -1,0 +1,5 @@
+/* TEAM */
+unrooted — threat hunter / threat maker
+site:   https://unrooted.github.io
+source: https://github.com/unrooted/unrooted.github.io
+built:  Hugo + Nix

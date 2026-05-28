@@ -1,3 +1,6 @@
 /public/
 /resources/
+/result
 .hugo_build.lock
+.superpowers/
+.DS_Store

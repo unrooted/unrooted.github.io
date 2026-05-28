@@ -1,0 +1,17 @@
+<footer class="footer footer-prompt">
+  <span class="footer-left">
+    <span class="prompt-user">unrooted@web</span><span class="prompt-colon">:</span><span class="prompt-path">~</span><span class="prompt-dollar">$</span> <span class="prompt-cmd">exit</span>
+  </span>
+  <span class="footer-right">
+    <a href="https://github.com/panr/hugo-theme-terminal" target="_blank" rel="noopener">[theme: panr/terminal]</a>
+  </span>
+</footer>
+
+{{ $menu := resources.Get "js/menu.js" | js.Build }}
+{{ $cp := resources.Get "js/code.js" | js.Build }}
+
+{{ $bundle := slice $menu $cp | resources.Concat "bundle.js" | resources.Minify }}
+
+<script type="text/javascript" src="{{ $bundle.RelPermalink }}"></script>
+
+{{ partial "extended_footer.html" . }}

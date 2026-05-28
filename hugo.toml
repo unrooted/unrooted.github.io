@@ -1,15 +1,21 @@
-baseurl = "/"
+baseurl = "https://unrooted.github.io/"
 languageCode = "en-us"
 # Add it only if you keep the theme in the `themes` directory.
 # Remove it if you use the theme as a remote Hugo Module.
 # theme = "terminal"
 pagination.pagerSize = 5
 
+[taxonomies]
+  tag = "tags"
+
 copyright = "unrooted's blog © 2025 by unrooted"
 
 # Required for Chroma and the custom syntax highlighting.
 [markup.highlight]
   noClasses = false
+  lineNos = true
+  lineNumbersInTable = false
+  tabWidth = 2
 
 [params]
 
@@ -18,7 +24,7 @@ copyright = "unrooted's blog © 2025 by unrooted"
   contentTypeName = "posts"
 
   # if you set this to 0, only submenu trigger will be visible
-  showMenuItems = 2
+  showMenuItems = 4
 
   # show selector to switch language
   showLanguageSelector = false
@@ -90,13 +96,25 @@ copyright = "unrooted's blog © 2025 by unrooted"
 
       [languages.en.menu]
         [[languages.en.menu.main]]
-          identifier = "about"
-          name = "About"
-          url = "/about"
-        [[languages.en.menu.main]]
           identifier = "posts"
-          name = "Posts"
+          name = "posts"
           url = "/posts"
+          weight = 10
+        [[languages.en.menu.main]]
+          identifier = "projects"
+          name = "projects"
+          url = "/projects"
+          weight = 20
+        [[languages.en.menu.main]]
+          identifier = "about"
+          name = "about"
+          url = "/about"
+          weight = 30
+        [[languages.en.menu.main]]
+          identifier = "rss"
+          name = "rss"
+          url = "/posts/index.xml"
+          weight = 40
 
 [[module.imports]]
   path = 'github.com/panr/hugo-theme-terminal/v4'

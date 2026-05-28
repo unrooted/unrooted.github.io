@@ -1,0 +1,37 @@
+{{- $path := "~" -}}
+{{- $cmd := "whoami" -}}
+{{- if .IsHome -}}
+  {{- $path = "~" -}}
+  {{- $cmd = "whoami" -}}
+{{- else if eq .Kind "404" -}}
+  {{- $path = "/" -}}
+  {{- $cmd = "cat: that-page: not found" -}}
+{{- else if eq .Kind "taxonomy" -}}
+  {{- $path = strings.TrimSuffix "/" .RelPermalink -}}
+  {{- $cmd = "ls" -}}
+{{- else if eq .Kind "term" -}}
+  {{- $path = strings.TrimSuffix "/" .RelPermalink -}}
+  {{- $cmd = "grep -r" -}}
+{{- else if and (eq .Kind "section") (eq .Section "posts") -}}
+  {{- $path = "/blog" -}}
+  {{- $cmd = "ls" -}}
+{{- else if and (eq .Kind "page") (eq .Section "posts") -}}
+  {{- $path = printf "/blog/%s" .File.ContentBaseName -}}
+  {{- $cmd = "cat" -}}
+{{- else if and (eq .Kind "section") (eq .Section "projects") -}}
+  {{- $path = "/projects" -}}
+  {{- $cmd = "ls" -}}
+{{- else if and (eq .Kind "page") (eq .Section "projects") -}}
+  {{- $path = printf "/projects/%s" .File.ContentBaseName -}}
+  {{- $cmd = "cat" -}}
+{{- else if eq .Type "page" -}}
+  {{- $slug := .File.ContentBaseName | default (.Title | urlize) -}}
+  {{- $path = printf "/%s" $slug -}}
+  {{- $cmd = "whoami" -}}
+{{- end -}}
+
+<a class="prompt-logo" href="{{ if $.Site.Params.Logo.LogoHomeLink }}{{ $.Site.Params.Logo.LogoHomeLink }}{{ else }}{{ $.Site.BaseURL }}{{ end }}">
+  <div class="logo prompt">
+    <span class="prompt-user">unrooted@web</span><span class="prompt-colon">:</span><span class="prompt-path">{{ $path }}</span><span class="prompt-dollar">$</span> <span class="prompt-cmd">{{ $cmd }}</span> <span class="prompt-cursor">▮</span>
+  </div>
+</a>

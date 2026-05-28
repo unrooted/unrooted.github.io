@@ -1,0 +1,40 @@
+{{ define "main" }}
+<article class="post project-single">
+  <h1 class="post-title">
+    <a href="{{ .Permalink }}">{{ .Title | markdownify }}</a>
+    {{ with .Params.status }}
+      <span class="project-status project-status--{{ . | lower }}">[{{ upper . }}]</span>
+    {{ end }}
+  </h1>
+
+  <div class="post-meta">
+    {{- if .Date -}}
+      <time class="post-date">
+        {{- partial "post-date" . -}}
+        {{- if and $.Site.Params.showLastUpdated .Lastmod -}}
+          &nbsp;{{- partial "post-lastmod" . -}}
+        {{- end -}}
+      </time>
+    {{- end -}}
+  </div>
+
+  {{ if .Params.tags }}
+    <span class="post-tags">
+      {{ range .Params.tags }}
+        #<a href="{{ (urlize (printf "tags/%s/" .)) | absLangURL }}">{{ . }}</a>&nbsp;
+      {{ end }}
+    </span>
+  {{ end }}
+
+  <div class="post-content">
+    {{- with .Content -}}
+      <div>
+        {{ . | replaceRE "(<h[1-9] id=\"([^\"]+)\".+)(</h[1-9]+>)" `${1}<a href="#${2}" class="hanchor" ariaLabel="Anchor">#</a> ${3}` | safeHTML }}
+      </div>
+    {{- end -}}
+    {{ with .Params.repo }}
+      <p><a class="project-repo" href="{{ . }}">repo&nbsp;→</a></p>
+    {{ end }}
+  </div>
+</article>
+{{ end }}
