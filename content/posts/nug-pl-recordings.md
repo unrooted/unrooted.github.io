@@ -1,6 +1,6 @@
 ---
 title: "Nix User Group Poland - Meetup recordings"
-description: "Finally publishing meetup recordings"
+description: "finally publishing meetup recordings"
 date: 2025-11-12
 tags:
   - nix
